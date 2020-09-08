@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    //Name of the function is the same as referenced in the activity.xml file
+    //context is this view, and Length_Long is a duration of 3.5 seconds as a constant
     public void toastMe(View view) {
         Toast.makeText(this, "Hello World!", Toast.LENGTH_LONG).show();
 
