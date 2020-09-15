@@ -10,10 +10,11 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FileRead {
 
-    public void readWordlist(MainActivity view) throws IOException {
+    public String getWord(MainActivity view) throws IOException {
             List myList = new ArrayList();
             InputStream is = view.getResources().openRawResource(R.raw.wordlist);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -25,6 +26,9 @@ public class FileRead {
             }
             System.out.println (myList);
             is.close();
+
+            Random random = new Random();
+            return (String) myList.get(random.nextInt(myList.size()));
 
     }
 }
