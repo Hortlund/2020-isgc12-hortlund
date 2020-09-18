@@ -24,7 +24,6 @@ public class FileRead {
                 myList.add(strLine);
 
             }
-            System.out.println (myList);
             is.close();
 
             Random random = new Random();
