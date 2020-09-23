@@ -12,17 +12,18 @@ import java.util.Random;
 public class FileRead implements WordHandle {
     @Override
     public String getWord(MainActivity view) throws IOException {
-        List myList = new ArrayList();
+        List wordList = new ArrayList();
+        String line;
+
         InputStream is = view.getResources().openRawResource(R.raw.wordlist);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-        String strLine;
-        while ((strLine = br.readLine()) != null)   {
-            myList.add(strLine);
+        while ((line = br.readLine()) != null)   {
+            wordList.add(line);
 
         }
         is.close();
-        return randomizeWord(myList);
+        return randomizeWord(wordList);
     }
 
     @Override
