@@ -2,6 +2,7 @@ package se.cloudworks.labb2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     char guessChar;
     private List words = new ArrayList<String>();
     private int numberOfGuesses  = 0;
+    private Intent intent;
     StringBuilder myName = new StringBuilder();
     FileRead read = new FileRead();
     Game game = new Game();
@@ -34,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setup();
 
+    }
+    public void onResume() {
+        super.onResume();
+        setup();
     }
 
     public void setup(){
@@ -60,18 +66,6 @@ public class MainActivity extends AppCompatActivity {
         }
         we.setText(myName);
     }
-
-    /*
-
-                if(game.checkLetter(this, guessChar, chars) == 0){
-                    guessedChars += guessChar;
-                    guesses.setText("Guesses: " + guessedChars);
-                    image.setImageResource(R.drawable.guess7);
-                }else{
-
-
-                }
-     */
 
     public void guess(View view){
 
@@ -119,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if(chars.matches(myName.toString())){
-            Toast.makeText(this, "Du Vann!!", Toast.LENGTH_LONG).show();
-            setup();
+            intent = new Intent(this,WinActivity.class);
+            startActivity(intent);
         }
         if(guessedChars.length()>=7){
-            Toast.makeText(this, "Du förlora!", Toast.LENGTH_LONG).show();
-            setup();
+            intent = new Intent(this,LoseActivity.class);
+            startActivity(intent);
         }
         wordGuess.setText("");
 
