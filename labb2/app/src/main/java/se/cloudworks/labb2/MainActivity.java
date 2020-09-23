@@ -17,15 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView word, guesses, we;
+    private TextView guesses, we;
     private EditText wordGuess;
     private ImageView image;
-    private String guessedChars, guessString;
-    private String chars, charss;
+    private String guessedChars, guessString, chars;
     private int guess;
     char guessChar;
-    private List words = new ArrayList<String>();
-    private int numberOfGuesses  = 0;
     private Intent intent;
     StringBuilder myName = new StringBuilder();
     FileRead read = new FileRead();
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setup(){
-        word = findViewById(R.id.word);
         wordGuess = findViewById(R.id.wordGuess);
         guesses = findViewById(R.id.guesses);
         we = findViewById(R.id.textView);
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("walla", "Ord:" + chars);
+        Log.d("rättning", "Ord: " + chars);
         for(int i = 0; i < chars.length(); i++){
             myName.append("_");
         }
@@ -114,10 +110,14 @@ public class MainActivity extends AppCompatActivity {
         }
         if(chars.matches(myName.toString())){
             intent = new Intent(this,WinActivity.class);
+            intent.putExtra("word", chars);
+            intent.putExtra("guesses", guessedChars);
             startActivity(intent);
         }
         if(guessedChars.length()>=7){
             intent = new Intent(this,LoseActivity.class);
+            intent.putExtra("word", chars);
+            intent.putExtra("guesses", guessedChars);
             startActivity(intent);
         }
         wordGuess.setText("");
