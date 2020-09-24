@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class WinActivity extends AppCompatActivity {
 
+    //Declaring important stuff
     private Intent intent;
     private TextView word,guesses;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,7 @@ public class WinActivity extends AppCompatActivity {
         setUp();
     }
 
+    //runs everytime the activity is resumed or created, sets up the layout and gets the different widgets
     public void setUp(){
         intent = getIntent();
         word=findViewById(R.id.textView3);
@@ -34,6 +37,7 @@ public class WinActivity extends AppCompatActivity {
 
     }
 
+    //If the player wants to play again, send us back to mainactivity
     public void playAgain(View view){
         intent = new Intent(this,MainActivity.class);
         startActivity(intent);
