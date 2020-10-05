@@ -27,6 +27,8 @@ public class ApiCall extends AsyncTask<String, Void, ArrayList> {
 
     @Override
     protected ArrayList<String> doInBackground(String... artist) {
+
+        //Much of the xml code was taken form lectures and the course github https://github.com/karlstad-business-school/ISGC12-code-examples but have been modified
         try {
             //Since asyncTask takes a array of strings as parameter, take out the first one(only one)
             name = artist[0];
@@ -36,6 +38,8 @@ public class ApiCall extends AsyncTask<String, Void, ArrayList> {
             String urlSafe = URLEncoder.encode(name, "utf-8");
             //new url object
             url = new URL("http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+urlSafe+"&api_key=YOUR_API_KEY");
+            //log to see the safest URL in northern europe*
+            Log.d("rättning", "URL: "+url.toString());
             //create a xml factory
             XmlPullParserFactory factory = null;
             //initialize

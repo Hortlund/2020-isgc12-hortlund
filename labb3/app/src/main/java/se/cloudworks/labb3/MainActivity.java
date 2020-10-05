@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onResume() {
+        //List view and array adapter code was from lectures and course github https://github.com/karlstad-business-school/ISGC12-code-examples but have been modifed
         super.onResume();
         //If we return with a list of artist go go forth
         if (getIntent().getStringArrayListExtra("list") != null) {
