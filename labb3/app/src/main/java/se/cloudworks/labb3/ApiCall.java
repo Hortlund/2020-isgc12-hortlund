@@ -11,6 +11,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 public class ApiCall extends AsyncTask<String, Void, ArrayList> {
     private Context _ctx;
@@ -27,18 +28,17 @@ public class ApiCall extends AsyncTask<String, Void, ArrayList> {
         try {
             name = artist[0];
             similarArtists = new ArrayList<>();
-            url = new URL("http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+name+"&api_key=YOUR_API_KEY");
+            String urlSafe = URLEncoder.encode(name, "utf-8");
+            url = new URL("http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+urlSafe+"&api_key=YOUR_API_KEY");
             XmlPullParserFactory factory = null;
             factory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = factory.newPullParser();
             parser.setInput(url.openStream(), null);
             int parserEvent = parser.getEventType();
-            Log.d("walla", "Calling URL: "+url.toString());
             String tagName;
             while(parserEvent != XmlPullParser.END_DOCUMENT){
                 if(parserEvent == XmlPullParser.START_TAG){
                     tagName = parser.getName();
-                    Log.d("walla", "Start tag found: "+tagName);
                     if(tagName.equals("error")){
                         similarArtists.add(parser.nextText());
                     }
@@ -53,7 +53,6 @@ public class ApiCall extends AsyncTask<String, Void, ArrayList> {
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
-        Log.d("walla", similarArtists.toString());
         return similarArtists;
     }
 
@@ -61,7 +60,7 @@ public class ApiCall extends AsyncTask<String, Void, ArrayList> {
     protected void onPostExecute(ArrayList similarArtists) {
         super.onPostExecute(similarArtists);
         Intent intent = new Intent("se.cloudworks.MainActivity");
-        intent.putExtra("name", name.replace("%20", " "));
+        intent.putExtra("name", name);
         intent.putStringArrayListExtra("list",similarArtists);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         _ctx.startActivity(intent);

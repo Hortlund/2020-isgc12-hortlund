@@ -23,12 +23,7 @@ public class MainActivity extends AppCompatActivity {
         EditText artistSearch = findViewById(R.id.artistSearch);
         ApiCall apiCall = new ApiCall(getApplicationContext());
         artistName = artistSearch.getText().toString();
-        if(artistName.matches("")){
-
-        }else{
-            apiCall.execute(artistName.replace(" ", "%20"));
-        }
-
+        apiCall.execute(artistName);
     }
 
     public void onResume() {
