@@ -14,9 +14,13 @@ public class Movie {
         return _title;
     }
 
+    public String get_imdbid(){
+        return _imdbid;
+    }
+
     public String toString(){
 
-        return _title + _imdbid;
+        return _title;
     }
 
 }

@@ -3,6 +3,7 @@ package se.cloudworks.labb4;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.telecom.Call;
 import android.util.Log;
 
 import com.android.volley.Cache;
@@ -26,12 +27,17 @@ import java.util.ArrayList;
 public class ApiCall {
     private Context _ctx;
     private ArrayList<Movie> movieSearch;
-    public ApiCall(Context ctx){
+
+    public ApiCall(Context ctx) {
         _ctx = ctx;
     }
-    public void doRequest(String movieTitle){
 
-        String url = "https://www.myapimovies.com/api/v1/movie/search?title="+ movieTitle + "&token=YOUR_API_KEY";
+    public void finish(ArrayList<Movie> movieSearch){
+    }
+
+    public void doRequest(String movieTitle) {
+
+        String url = "https://www.myapimovies.com/api/v1/movie/search?title=" + movieTitle + "&token=YOUR_API_KEY";
         Log.d("walla", url);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -42,18 +48,19 @@ public class ApiCall {
                         movieSearch = new ArrayList<>();
                         Log.d("walla", "respone: " + response.toString());
                         try {
-                            JSONArray data=response.getJSONArray("data");
-                            for(int i = 0; i < data.length(); i++){
-                                JSONObject wObject=data.getJSONObject(i);
-                                String title=wObject.get("title").toString();
+                            JSONArray data = response.getJSONArray("data");
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject wObject = data.getJSONObject(i);
+                                String title = wObject.get("title").toString();
                                 //String title = response.get("title").toString();
                                 String imdbid = wObject.get("imdbId").toString();
-                                Log.d("walla", title);
-                                Log.d("walla", imdbid);
-                                Movie movie = new Movie(title,imdbid);
+                                //Log.d("walla", title);
+                                //Log.d("walla", imdbid);
+                                Movie movie = new Movie(title, imdbid);
                                 movieSearch.add(movie);
-                                Log.d("walla", "lenght" + movieSearch.size());
+                                //Log.d("walla", "lenght" + movieSearch.size());
                             }
+                            ((Callback)_ctx).VolleyResponse(movieSearch);
 
 
                         } catch (JSONException e) {
@@ -70,7 +77,7 @@ public class ApiCall {
 
                     }
                 });
+        //Log.d("walla", "post execute" + movieSearch.size());
         VolleySingleton.getInstance(_ctx).addToRequestQueue(jsonObjectRequest);
-        Log.d("walla", "post execute" + movieSearch.size());
     }
 }
