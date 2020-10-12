@@ -3,6 +3,7 @@ package se.cloudworks.labb4;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -13,43 +14,63 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ApiCall extends AsyncTask<String, Void, ArrayList>{
-
+public class ApiCall {
     private Context _ctx;
-    private ArrayList<String> movieSearch = new ArrayList<>();
-
+    private ArrayList<Movie> movieSearch;
     public ApiCall(Context ctx){
         _ctx = ctx;
     }
-    @Override
-    protected ArrayList<String> doInBackground(String... movies) {
+    public void doRequest(String movieTitle){
 
-        RequestQueue queue;
-        // Instantiate the cache
-        Cache cache = new DiskBasedCache(_ctx.getCacheDir(), 1024 * 1024); // 1MB cap
+        String url = "https://www.myapimovies.com/api/v1/movie/search?title="+ movieTitle + "&token=YOUR_API_KEY";
+        Log.d("walla", url);
 
-        // Set up the network to use HttpURLConnection as the HTTP client.
-        Network network = new BasicNetwork(new HurlStack());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-        // Instantiate the RequestQueue with the cache and network.
-        queue = new RequestQueue(cache, network);
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        movieSearch = new ArrayList<>();
+                        Log.d("walla", "respone: " + response.toString());
+                        try {
+                            JSONArray data=response.getJSONArray("data");
+                            for(int i = 0; i < data.length(); i++){
+                                JSONObject wObject=data.getJSONObject(i);
+                                String title=wObject.get("title").toString();
+                                //String title = response.get("title").toString();
+                                String imdbid = wObject.get("imdbId").toString();
+                                Log.d("walla", title);
+                                Log.d("walla", imdbid);
+                                Movie movie = new Movie(title,imdbid);
+                                movieSearch.add(movie);
+                                Log.d("walla", "lenght" + movieSearch.size());
+                            }
 
-        // Start the queue
-        queue.start();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
+                    }
+                }, new Response.ErrorListener() {
 
-        movieSearch = new ArrayList<>();
-        return movieSearch;
-    }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Eservice", error.toString());
 
-    @Override
-    protected void onPostExecute(ArrayList movies) {
-        super.onPostExecute(movies);
-        Intent intent = new Intent("se.cloudworks.MainActivity");
+                    }
+                });
+        VolleySingleton.getInstance(_ctx).addToRequestQueue(jsonObjectRequest);
+        Log.d("walla", "post execute" + movieSearch.size());
     }
 }
