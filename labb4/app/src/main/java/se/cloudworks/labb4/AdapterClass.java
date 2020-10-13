@@ -1,6 +1,7 @@
 package se.cloudworks.labb4;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
 
     private ArrayList<Movie> list;
     private Context context;
+
+    private Movie tmp=null;
 
     public AdapterClass(ArrayList<Movie> list, Context context) {
         this.list = list;
@@ -53,6 +56,10 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
         callbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                Storage movies = new SqliteHandler(context);
+                //Log.d("walla", list.get(position).get_title() + list.get(position).get_imdbid() + list.get(position).get_year());
+                tmp = new Movie(list.get(position).get_title(),list.get(position).get_imdbid(),list.get(position).get_year());
+                movies.add(tmp);
                 Toast.makeText(context, list.get(position).toString() + " Saved!", Toast.LENGTH_LONG).show();
 
             }

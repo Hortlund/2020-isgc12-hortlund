@@ -58,7 +58,7 @@ public class ApiCall {
                                     title = "No title";
                                 }
 
-                                if(wObject.has("imdbID")){
+                                if(wObject.has("imdbId")){
                                     imdbid = wObject.get("imdbId").toString();
                                 }else{
                                     imdbid = null;

@@ -20,6 +20,10 @@ public class Movie {
         return _imdbid;
     }
 
+    public String get_year(){
+        return _year;
+    }
+
     public String toString(){
 
         return _title + " " + _year;
