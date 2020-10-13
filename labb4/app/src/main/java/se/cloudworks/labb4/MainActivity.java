@@ -2,6 +2,7 @@ package se.cloudworks.labb4;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telecom.Call;
 import android.util.Log;
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements Callback {
         //Log.d("walla", "klar!!" + walla.toString());
 
 
+    }
+
+    public void showSavedMovies(View view){
+        Intent intent = new Intent("se.cloudworks.ShowSavedMoviesActivity");
+        this.startActivity(intent);
     }
 
     public void onResume() {

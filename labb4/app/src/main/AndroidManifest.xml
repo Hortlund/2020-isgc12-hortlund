@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ShowSavedMoviesActivity">
+            <intent-filter>
+                <action android:name="se.cloudworks.ShowSavedMoviesActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 

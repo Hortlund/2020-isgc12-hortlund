@@ -52,6 +52,7 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
         tvContact.setText(list.get(position).toString());
 
         Button callbtn= (Button)view.findViewById(R.id.btn);
+        callbtn.setText("s");
 
         callbtn.setOnClickListener(new View.OnClickListener(){
             @Override
