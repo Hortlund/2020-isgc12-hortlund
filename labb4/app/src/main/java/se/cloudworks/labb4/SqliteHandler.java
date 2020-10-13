@@ -17,7 +17,7 @@ public class SqliteHandler implements  Storage {
     private SQLiteDatabase database;
     private String[] allColumns = { DBHelper.FIELD1, DBHelper.FIELD2,
             DBHelper.FIELD3 };
-    private List<Movie> all = new ArrayList<>();
+    private ArrayList<Movie> all = new ArrayList<>();
 
     public SqliteHandler(Context context) {
         DBHelper dbHelper = new DBHelper(context);
@@ -59,6 +59,10 @@ public class SqliteHandler implements  Storage {
         return tmp;
     }
 
+    public ArrayList<Movie> getAll(){
+        return all;
+    }
+
 
     @Override
     public void open() {
@@ -67,7 +71,7 @@ public class SqliteHandler implements  Storage {
 
     @Override
     public void close() {
-        Log.d(TAG,"Closing and writing DB");
+        Log.d("walla","Closing and writing DB");
         Iterator<Movie> i = all.iterator();
         while (i.hasNext()) {
             addMovieToDB(i.next());
@@ -76,6 +80,7 @@ public class SqliteHandler implements  Storage {
 
     @Override
     public void add(Movie m) {
+        all.clear();
         all.add(m);
         pos = all.size() - 1;
         System.out.println("adding " + all.size());

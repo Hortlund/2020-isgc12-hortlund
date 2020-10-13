@@ -1,5 +1,7 @@
 package se.cloudworks.labb4;
 
+import java.util.ArrayList;
+
 public interface Storage {
 
     void open();
@@ -11,5 +13,7 @@ public interface Storage {
     Movie findMovie(String imdbid);
 
     Movie delete(String imdbid);
+
+    ArrayList<Movie> getAll();
 
 }

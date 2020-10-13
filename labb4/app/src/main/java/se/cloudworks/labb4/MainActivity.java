@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements Callback {
         //Get reference of listview
         ListView lw = findViewById(R.id.listview);
         //connect the adapter and list view
-        lw.setAdapter(new AdapterClass(movieSearch,this));
+        lw.setAdapter(new AdapterClass(movieSearch,this, 1));
 
         return null;
     }

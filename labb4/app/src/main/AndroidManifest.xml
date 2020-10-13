@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="se.cloudworks.MainActivity" />
+                <action android:name="se.cloudworks.MainActivityLabb4" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
