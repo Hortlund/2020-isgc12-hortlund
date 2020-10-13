@@ -45,18 +45,37 @@ public class ApiCall {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        String title, imdbid,year;
                         movieSearch = new ArrayList<>();
                         Log.d("walla", "respone: " + response.toString());
                         try {
                             JSONArray data = response.getJSONArray("data");
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject wObject = data.getJSONObject(i);
-                                String title = wObject.get("title").toString();
+                                if(wObject.has("title")){
+                                    title = wObject.get("title").toString();
+                                }else{
+                                    title = "No title";
+                                }
+
+                                if(wObject.has("imdbID")){
+                                    imdbid = wObject.get("imdbId").toString();
+                                }else{
+                                    imdbid = null;
+                                }
+
+                                if(wObject.has("year")){
+                                    year = wObject.get("year").toString();
+                                }else{
+                                    year = "unknown";
+                                }
+
                                 //String title = response.get("title").toString();
-                                String imdbid = wObject.get("imdbId").toString();
+
+
                                 //Log.d("walla", title);
                                 //Log.d("walla", imdbid);
-                                Movie movie = new Movie(title, imdbid);
+                                Movie movie = new Movie(title, imdbid, year);
                                 movieSearch.add(movie);
                                 //Log.d("walla", "lenght" + movieSearch.size());
                             }

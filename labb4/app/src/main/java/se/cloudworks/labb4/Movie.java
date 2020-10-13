@@ -4,10 +4,12 @@ public class Movie {
 
     String _title;
     String _imdbid;
+    String _year;
 
-    public Movie(String title, String imdbid){
+    public Movie(String title, String imdbid, String year){
         _title = title;
         _imdbid = imdbid;
+        _year = year;
     }
 
     public String get_title(){
@@ -20,7 +22,7 @@ public class Movie {
 
     public String toString(){
 
-        return _title;
+        return _title + " " + _year;
     }
 
 }

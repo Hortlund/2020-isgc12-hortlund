@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity implements Callback {
         for(int i = 0; i < movieSearch.size(); i++){
             Log.d("walla", "klar!!" + movieSearch.get(i).get_title() + " " + movieSearch.get(i).get_imdbid());
         }
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, movieSearch);
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, movieSearch);
         //Get reference of listview
         ListView lw = findViewById(R.id.listview);
         //connect the adapter and list view
-        lw.setAdapter(adapter);
+        lw.setAdapter(new AdapterClass(movieSearch,this));
 
         return null;
     }
