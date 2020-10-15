@@ -32,7 +32,7 @@ public class SqliteHandler implements  Storage {
         values.put(DBHelper.FIELD2, m.get_imdbid());
         values.put(DBHelper.FIELD3, m.get_year());
         long insertId = database.insert(DBHelper.TABLE_NAME, null, values);
-        Log.d(TAG, "writing in DB: " + insertId);
+        Log.d("walla", "writing in DB: " + insertId);
     }
 
     private void getAllMovies() {
@@ -80,10 +80,31 @@ public class SqliteHandler implements  Storage {
 
     @Override
     public void add(Movie m) {
-        all.clear();
-        all.add(m);
+        Log.d("walla", "adding" + m.toString());
+        addMovieToDB(m);
         pos = all.size() - 1;
         System.out.println("adding " + all.size());
+    }
+
+
+
+    @Override
+    public void delete(String imdbid) {
+        database.delete(DBHelper.TABLE_NAME,DBHelper.FIELD2 + "=\""+ imdbid + "\";", null);
+        /*
+        getAllMovies();
+        Movie t = findMovie(imdbid);
+        all.remove(t);
+        System.out.println("removing " + all.size());
+        pos = 0;
+        // TODO Auto-generated method stub
+        if (all.size() > 0) {
+            return all.get(pos);
+        } else {
+            return null;
+        }
+         */
+
     }
 
     public Movie findMovie(String imdbid) {
@@ -98,19 +119,5 @@ public class SqliteHandler implements  Storage {
         }
         // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public Movie delete(String imdbid) {
-        Movie t = findMovie(imdbid);
-        all.remove(t);
-        System.out.println("removing " + all.size());
-        pos = 0;
-        // TODO Auto-generated method stub
-        if (all.size() > 0) {
-            return all.get(pos);
-        } else {
-            return null;
-        }
     }
 }

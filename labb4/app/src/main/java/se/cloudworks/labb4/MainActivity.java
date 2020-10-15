@@ -48,10 +48,8 @@ public class MainActivity extends AppCompatActivity implements Callback {
         ApiCall apiCall = new ApiCall(this);
         movieTitle = search.getText().toString();
         //apiCall.execute(movieTitle);
-        apiCall.doRequest(movieTitle);
+        apiCall.doRequest(movieTitle,1);
         //Log.d("walla", "klar!!" + walla.toString());
-
-
     }
 
     public void showSavedMovies(View view){
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements Callback {
     @Override
     public ArrayList<Movie> VolleyResponse(ArrayList<Movie> movieSearch) {
         for(int i = 0; i < movieSearch.size(); i++){
-            Log.d("walla", "klar!!" + movieSearch.get(i).get_title() + " " + movieSearch.get(i).get_imdbid());
+            //Log.d("walla", "klar!!" + movieSearch.get(i).get_title() + " " + movieSearch.get(i).get_imdbid());
         }
         //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, movieSearch);
         //Get reference of listview

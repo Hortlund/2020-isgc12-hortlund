@@ -12,7 +12,7 @@ public interface Storage {
 
     Movie findMovie(String imdbid);
 
-    Movie delete(String imdbid);
+    void delete(String imdbid);
 
     ArrayList<Movie> getAll();
 

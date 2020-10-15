@@ -10,16 +10,49 @@
         android:id="@+id/movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxEms="15"
+        android:layout_marginTop="32dp"
+        android:maxEms="10"
         android:singleLine="false"
+        android:text="walla"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/getSimilar"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:minWidth="5dip"
+        android:minHeight="20dip"
+        android:text="Get Similar"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btn"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Save"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/getSimilar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:minWidth="5dip"
+        android:minHeight="20dip"
+        android:text="Get Actors"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getSimilar"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

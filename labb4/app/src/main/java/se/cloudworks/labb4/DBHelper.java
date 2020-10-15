@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     static final String TABLE_NAME = "Movie";
     private static final String DATABASE_NAME = "MovieDB";
     static final String FIELD1 = "Title";
@@ -27,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL(TABLE_CREATE);
+        onCreate(sqLiteDatabase);
     }
 }
