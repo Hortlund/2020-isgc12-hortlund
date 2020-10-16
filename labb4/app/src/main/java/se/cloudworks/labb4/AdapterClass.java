@@ -2,7 +2,6 @@ package se.cloudworks.labb4;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,15 @@ import java.util.ArrayList;
 public class AdapterClass extends BaseAdapter implements ListAdapter {
 
     private ArrayList<Movie> list;
+    private ArrayList<Actor> actors;
     private Context context;
     private int flag;
     private Storage movies;
 
     private Movie tmp=null;
 
-    public AdapterClass(ArrayList<Movie> list, Context context, int flag) {
+    public AdapterClass(ArrayList<Movie> list,ArrayList<Actor> actors, Context context, int flag) {
+        this.actors = actors;
         this.list = list;
         this.context = context;
         this.flag = flag;
@@ -32,7 +33,12 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        if(actors != null){
+            return actors.size();
+        }else{
+            return list.size();
+        }
+
     }
 
     @Override
@@ -58,7 +64,12 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
             }
 
             TextView tvContact= (TextView)view.findViewById(R.id.movie);
-            tvContact.setText(list.get(position).toString());
+            if(actors != null){
+                tvContact.setText(actors.get(position).toString());
+            }else{
+                tvContact.setText(list.get(position).toString());
+            }
+
 
             Button callbtn= (Button)view.findViewById(R.id.btn);
             Button getSimilar = (Button)view.findViewById(R.id.getSimilar);
@@ -108,6 +119,10 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
 
                     }
                 });
+            }else if(flag == 3){
+                callbtn.setVisibility(View.GONE);
+                getSimilar.setVisibility(View.GONE);
+                getActors.setVisibility(View.GONE);
             }
 
 

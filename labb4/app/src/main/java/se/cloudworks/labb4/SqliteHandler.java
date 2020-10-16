@@ -5,15 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class SqliteHandler implements  Storage {
 
-    private int pos = 0;
-    private final String TAG ="Skier";
     private SQLiteDatabase database;
     private String[] allColumns = { DBHelper.FIELD1, DBHelper.FIELD2,
             DBHelper.FIELD3 };
@@ -33,10 +28,10 @@ public class SqliteHandler implements  Storage {
         values.put(DBHelper.FIELD3, m.get_year());
         long insertId = database.insert(DBHelper.TABLE_NAME, null, values);
         Log.d("walla", "writing in DB: " + insertId);
+        database.close();
     }
 
     private void getAllMovies() {
-
         Cursor cursor = database.query(DBHelper.TABLE_NAME, allColumns,
                 null, null, null, null, null);
 
@@ -46,12 +41,7 @@ public class SqliteHandler implements  Storage {
             all.add(tmp);
             cursor.moveToNext();
         }
-        // Make sure to close the cursor
         cursor.close();
-        // all.add(new
-        // Skier().setPnr("121212-1212").setName("Pallen").setClub("?sarna"));
-        // all.add(new
-        // Skier().setPnr("232323-2323").setName("Knas").setClub("FBK"));
     }
 
     private Movie cursorToMovie(Cursor cursor) {
@@ -63,61 +53,14 @@ public class SqliteHandler implements  Storage {
         return all;
     }
 
-
-    @Override
-    public void open() {
-        pos = 0;
-    }
-
-    @Override
-    public void close() {
-        Log.d("walla","Closing and writing DB");
-        Iterator<Movie> i = all.iterator();
-        while (i.hasNext()) {
-            addMovieToDB(i.next());
-        }
-    }
-
     @Override
     public void add(Movie m) {
-        Log.d("walla", "adding" + m.toString());
         addMovieToDB(m);
-        pos = all.size() - 1;
-        System.out.println("adding " + all.size());
     }
-
-
 
     @Override
     public void delete(String imdbid) {
         database.delete(DBHelper.TABLE_NAME,DBHelper.FIELD2 + "=\""+ imdbid + "\";", null);
-        /*
-        getAllMovies();
-        Movie t = findMovie(imdbid);
-        all.remove(t);
-        System.out.println("removing " + all.size());
-        pos = 0;
-        // TODO Auto-generated method stub
-        if (all.size() > 0) {
-            return all.get(pos);
-        } else {
-            return null;
-        }
-         */
-
-    }
-
-    public Movie findMovie(String imdbid) {
-        Iterator<Movie> i = all.iterator();
-        Movie tmp = null;
-        while (i.hasNext()) {
-            tmp = i.next();
-            if (tmp.get_imdbid().equals(imdbid)) {
-                System.out.println("found match");
-                return tmp;
-            }
-        }
-        // TODO Auto-generated method stub
-        return null;
+        database.close();
     }
 }

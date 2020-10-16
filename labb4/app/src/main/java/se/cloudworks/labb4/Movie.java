@@ -2,9 +2,9 @@ package se.cloudworks.labb4;
 
 public class Movie {
 
-    String _title;
-    String _imdbid;
-    String _year;
+    private String _title;
+    private String _imdbid;
+    private String _year;
 
     public Movie(String title, String imdbid, String year){
         _title = title;

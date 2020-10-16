@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public interface Callback {
 
-    ArrayList<Movie> VolleyResponse(ArrayList<Movie> movieSearch);
+    ArrayList<Movie> VolleyResponseMovie(ArrayList<Movie> movieSearch);
+    ArrayList<Actor> VolleyResponseActor(ArrayList<Actor> movieSearch);
 
 }
