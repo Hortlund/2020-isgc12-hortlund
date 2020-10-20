@@ -33,7 +33,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/save"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -44,7 +44,7 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn3"
+        android:id="@+id/getActors"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:minWidth="5dip"

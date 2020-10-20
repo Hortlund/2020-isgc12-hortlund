@@ -6,6 +6,8 @@ public interface Storage {
 
     void add(Movie m);
 
+    void close();
+
     void delete(String imdbid);
 
     ArrayList<Movie> getAll();

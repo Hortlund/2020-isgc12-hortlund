@@ -11,45 +11,75 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+//Implements functions form callback interface to receive response from volley
 public class MainActivity extends AppCompatActivity implements Callback {
 
+    // holds the search string and storage class object
     private String movieTitle;
-    private ArrayList<Movie> walla;
-    private ArrayAdapter adapter;
+    private Storage movies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        movies = new SqliteHandler(this);
+
     }
 
 
     public void onClick(View view){
+        //gets edittextfield from view
         EditText search = findViewById(R.id.movieSearch);
+        // Creates a new apicall object and sends this view as context
         ApiCall apiCall = new ApiCall(this);
+        //Stringify
         movieTitle = search.getText().toString();
+        //Call dorequest function with search string and flag one to represent search for movies with title.
         apiCall.doRequest(movieTitle,1);
     }
 
     public void showSavedMovies(View view){
+        //New intent object with action to saved movies activity
         Intent intent = new Intent("se.cloudworks.ShowSavedMoviesActivity");
+        //goes to that activity
         this.startActivity(intent);
     }
 
     public void onResume() {
         super.onResume();
+
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        movies.close();
+
+    }
+
+    public void onPause() {
+        super.onPause();
+        movies.close();
     }
 
     @Override
-    public ArrayList<Movie> VolleyResponseMovie(ArrayList<Movie> movieSearch) {
+    //function from interface callback, runs if we search for movies
+    public void VolleyResponseMovie(ArrayList<Movie> movieSearch) {
+        //gets listview from layout
         ListView lw = findViewById(R.id.listview);
-        lw.setAdapter(new AdapterClass(movieSearch,null,this, 1));
-        return null;
+        //sets custom listview adapter and sends arraylist from apicall and a flag that represent different ways the adapter class will represent the data, also sends
+        //the storage object with it
+        lw.setAdapter(new AdapterClass(movieSearch,null,this, 1, movies));
     }
 
     @Override
-    public ArrayList<Actor> VolleyResponseActor(ArrayList<Actor> movieSearch) {
+    //function from interface callback, runs if we search for actors
+    public void VolleyResponseActor(ArrayList<Actor> movieSearch) {
+        //gets listview from layout
         ListView lw = findViewById(R.id.listview);
-        lw.setAdapter(new AdapterClass(null,movieSearch,this, 3));
-        return null;
+        //sets custom listview adapter and sends arraylist from apicall and a flag that represent different ways the adapter class will represent the data, also sends
+        //the storage object with it
+        lw.setAdapter(new AdapterClass(null,movieSearch,this, 3, movies));
     }
+
+
 }

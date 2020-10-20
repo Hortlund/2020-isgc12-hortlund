@@ -16,11 +16,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+//Some code came from https://github.com/karlstad-business-school/ISGC12-code-examples as part of lectures and/or repositories with example code
+//This have been modified but som original elements may still be there.
+
 public class ApiCall {
     private Context _ctx;
     private ArrayList<Movie> movieSearch;
     private ArrayList<Actor> actorsSearch;
     private String url;
+    private static final String key = "YOUR_API_KEY";
 
     public ApiCall(Context ctx) {
         _ctx = ctx;
@@ -96,11 +100,11 @@ public class ApiCall {
                                     } else {
                                         imdbid = null;
                                     }
-
+                                    //If we search for similar movies, year is not shown because of the API.
                                     if (wObject.has("year")) {
                                         year = wObject.get("year").toString();
                                     } else {
-                                        year = "unknown";
+                                        year = "";
                                     }
                                     Movie movie = new Movie(title, imdbid, year);
                                     movieSearch.add(movie);
@@ -132,13 +136,13 @@ public class ApiCall {
             String safeSearch = URLEncoder.encode(search, "utf-8");
 
             if (flag == 1) {
-                url = "https://www.myapimovies.com/api/v1/movie/search?title=" + safeSearch + "&token=YOUR_API_KEY";
+                url = "https://www.myapimovies.com/api/v1/movie/search?title=" + safeSearch + "&token=" + key;
                 doCall(flag, url);
             } else if (flag == 2) {
-                url = "https://www.myapimovies.com/api/v1/movie/" + safeSearch + "/similar-movies?&token=YOUR_API_KEY";
+                url = "https://www.myapimovies.com/api/v1/movie/" + safeSearch + "/similar-movies?&token=" + key;
                 doCall(flag, url);
             } else if (flag == 3) {
-                url = "https://www.myapimovies.com/api/v1/movie/" + safeSearch + "/actors?&token=YOUR_API_KEY";
+                url = "https://www.myapimovies.com/api/v1/movie/" + safeSearch + "/actors?&token=" + key;
                 doCall(flag, url);
 
             }

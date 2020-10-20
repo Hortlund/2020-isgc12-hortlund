@@ -10,6 +10,9 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 
+//Some code came from https://github.com/karlstad-business-school/ISGC12-code-examples as part of lectures and/or repositories with example code
+//This have been modified but som original elements may still be there.
+
 public class VolleySingleton {
 
     private static VolleySingleton instance;
