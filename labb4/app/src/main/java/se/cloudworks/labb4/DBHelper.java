@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    //sets some values for the db, such as version, name, tables and fields, also the whole create command
     private static final int DATABASE_VERSION = 3;
     static final String TABLE_NAME = "Movie";
     private static final String DATABASE_NAME = "MovieDB";
@@ -24,13 +25,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    //runs when we need to create a db
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(TABLE_CREATE);
     }
 
     @Override
+    //creates a new db if version number changes for example
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(TABLE_CREATE);
         onCreate(sqLiteDatabase);
     }
 }

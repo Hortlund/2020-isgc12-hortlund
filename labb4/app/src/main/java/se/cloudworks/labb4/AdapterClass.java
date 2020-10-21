@@ -19,32 +19,32 @@ import java.util.ArrayList;
 public class AdapterClass extends BaseAdapter implements ListAdapter {
 
     //Creates private objects and variables we need
-    private ArrayList<Movie> list;
-    private ArrayList<Actor> actors;
+    private ArrayList<Movie> movielist;
+    private ArrayList<Actor> actorslist;
     private Context context;
     private int flag;
-    private Storage movies;
+    private Storage db;
     private ApiCall apiCall;
 
     private Movie m=null;
 
-    public AdapterClass(ArrayList<Movie> list,ArrayList<Actor> actors, Context context, int flag, Storage movies) {
+    public AdapterClass(ArrayList<Movie> list,ArrayList<Actor> actors, Context context, int flag, Storage db) {
         //Takes parameters and assigns them to class variables/objects
-        this.actors = actors;
-        this.list = list;
+        this.actorslist = actors;
+        this.movielist = list;
         this.context = context;
         this.flag = flag;
-        this.movies = movies;
+        this.db = db;
         this.apiCall = new ApiCall(context);
     }
 
     @Override
     //returns the size of the list that was sent, checks if its actors or movies
     public int getCount() {
-        if(actors != null){
-            return actors.size();
+        if(actorslist != null){
+            return actorslist.size();
         }else{
-            return list.size();
+            return movielist.size();
         }
 
     }
@@ -73,13 +73,13 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
                 //Here we give the layout for our custom listview
                 view = inflater.inflate(R.layout.movie_result_listview, null);
             }
-            //gets texitviw form our custom layout
+            //gets texitview form our custom layout
             TextView movie= view.findViewById(R.id.movie);
             //if we got actors list the get that value otherwise go with movie list
-            if(actors != null){
-                movie.setText(actors.get(position).toString());
+            if(actorslist != null){
+                movie.setText(actorslist.get(position).toString());
             }else{
-                movie.setText(list.get(position).toString());
+                movie.setText(movielist.get(position).toString());
             }
 
             //Gets the buttons we use in the custom layout.
@@ -94,10 +94,10 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
                 save.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        m = new Movie(list.get(position).get_title(),list.get(position).get_imdbid(),list.get(position).get_year());
-                        movies.add(m);
+                        m = new Movie(movielist.get(position).get_title(),movielist.get(position).get_imdbid(),movielist.get(position).get_year());
+                        db.add(m);
                         //Toast confirmation of movie saved
-                        Toast.makeText(context, list.get(position).toString() + " Saved!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, movielist.get(position).toString() + " Saved!", Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -107,7 +107,7 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
                 getSimilar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        apiCall.doRequest(list.get(position).get_imdbid(),2);
+                        apiCall.doRequest(movielist.get(position).get_imdbid(),2);
                     }
                 });
                 //set text to get actors
@@ -116,7 +116,7 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
                 getActors.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        apiCall.doRequest(list.get(position).get_imdbid(),3);
+                        apiCall.doRequest(movielist.get(position).get_imdbid(),3);
                     }
                 });
             }else if(flag == 2){
@@ -130,8 +130,8 @@ public class AdapterClass extends BaseAdapter implements ListAdapter {
                 save.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        movies.delete(list.get(position).get_imdbid());
-                        Toast.makeText(context, list.get(position).toString() + " Removed", Toast.LENGTH_LONG).show();
+                        db.delete(movielist.get(position).get_imdbid());
+                        Toast.makeText(context, movielist.get(position).toString() + " Removed", Toast.LENGTH_LONG).show();
                         Intent i =  new Intent("se.cloudworks.ShowSavedMoviesActivity");
                         context.startActivity(i);
 

@@ -2,31 +2,34 @@ package se.cloudworks.labb4;
 
 public class Movie {
 
-    private String _title;
-    private String _imdbid;
-    private String _year;
+    //not much to say here, simple blueprint for movie object, with sets the values in the constructor and have get methods, and overides the standard toString
+    //method when displaying them in the listview
+
+    private String title;
+    private String imdbid;
+    private String year;
 
     public Movie(String title, String imdbid, String year){
-        _title = title;
-        _imdbid = imdbid;
-        _year = year;
+        this.title = title;
+        this.imdbid = imdbid;
+        this.year = year;
     }
 
     public String get_title(){
-        return _title;
+        return this.title;
     }
 
     public String get_imdbid(){
-        return _imdbid;
+        return this.imdbid;
     }
 
     public String get_year(){
-        return _year;
+        return this.year;
     }
 
     public String toString(){
 
-        return _title + " " + _year;
+        return this.title + " " + this.year;
     }
 
 }

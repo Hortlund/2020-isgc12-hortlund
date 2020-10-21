@@ -16,13 +16,13 @@ public class MainActivity extends AppCompatActivity implements Callback {
 
     // holds the search string and storage class object
     private String movieTitle;
-    private Storage movies;
+    private Storage db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        movies = new SqliteHandler(this);
+        db = new SqliteHandler(this);
 
     }
 
@@ -45,20 +45,22 @@ public class MainActivity extends AppCompatActivity implements Callback {
         this.startActivity(intent);
     }
 
+    //on resume we just resume the activity, not much here to do, maybe needs to create new sqlitehandler, dont know since it never got out of stack
     public void onResume() {
         super.onResume();
 
     }
 
+    //on pause or destory we close the db connection, we want to hold it open as long as we need, since calling open and close on db is resource heavy
     public void onDestroy() {
         super.onDestroy();
-        movies.close();
+        db.close();
 
     }
 
     public void onPause() {
         super.onPause();
-        movies.close();
+        db.close();
     }
 
     @Override
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements Callback {
         ListView lw = findViewById(R.id.listview);
         //sets custom listview adapter and sends arraylist from apicall and a flag that represent different ways the adapter class will represent the data, also sends
         //the storage object with it
-        lw.setAdapter(new AdapterClass(movieSearch,null,this, 1, movies));
+        lw.setAdapter(new AdapterClass(movieSearch,null,this, 1, db));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements Callback {
         ListView lw = findViewById(R.id.listview);
         //sets custom listview adapter and sends arraylist from apicall and a flag that represent different ways the adapter class will represent the data, also sends
         //the storage object with it
-        lw.setAdapter(new AdapterClass(null,movieSearch,this, 3, movies));
+        lw.setAdapter(new AdapterClass(null,movieSearch,this, 3, db));
     }
 
 

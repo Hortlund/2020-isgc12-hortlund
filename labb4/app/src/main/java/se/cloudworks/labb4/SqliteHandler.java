@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import java.util.ArrayList;
 
 //Some code came from https://github.com/karlstad-business-school/ISGC12-code-examples as part of lectures and/or repositories with example code
